@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp.DTOs
 {
-    public class RAM
+    public class CaseDto
     {
         public string Manufacturer { get; set; }
         public string Model { get; set; }
-        public ushort Memory { get; set; }
-        public byte Nmodule { get; set; }
-        public string DDR { get; set; }
+        public string Form { get; set; }
         public string Mass { get; set; }
+        public string Materials { get; set; }
         public decimal Price { get; set; }
     }
 }

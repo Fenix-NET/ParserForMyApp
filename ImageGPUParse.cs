@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Flurl.Http;
 using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
+using ParserForMyApp.Data;
 
 namespace ParserForMyApp
 {
-    public class ImageGPUParse : BaseParseClass //where T:class
+    public class ImageGpuParse : BaseParseClass //where T:class
     {
         //public string ImgUrl { get; set; }
         //public string ImgName { get; set; }
@@ -39,12 +40,12 @@ namespace ParserForMyApp
             Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
-                ImageGPU Img = new();
+                ImageGpu Img = new();
                 using var doc = GetPage(link);
                 string imgurl = default;
                 string imgUrl2 = default;
                 string editor = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
-                Img.GPUModel = editor.Replace('/', '-') ?? "n/a";
+                Img.GpuModel = editor.Replace('/', '-') ?? "n/a";
                 //var imgUrl = doc.GetElementById("goods_photo").GetAttribute("href").ToString();
                 try { imgurl = doc.GetElementById("goods_photo").GetAttribute("href").ToString(); }
                 catch (Exception ex) { imgurl = doc.GetElementById("main_photo").GetAttribute("src").ToString(); }
@@ -53,16 +54,16 @@ namespace ParserForMyApp
                 //string formatimg = imgUrl2.Substring(2, imgUrl.IndexOf("."));
                 string format = Regex.Replace(imgUrl2, @"\D+.+?(?=\.)", "");       // Это ОНО!
 
-                string localFilename = $"{dir}" + "\\" + $"{Img.GPUModel}" + $"{format}";
+                string localFilename = $"{dir}" + "\\" + $"{Img.GpuModel}" + $"{format}";
 
                 var url = imgurl ?? imgUrl2;
                 Random random = new Random();
                 int indx = random.Next(1000, 9999);
-                await url.DownloadFileAsync(dir, localFilename = $"{Img.GPUModel}" + "-" + $"{indx}" + $"{format}");
+                await url.DownloadFileAsync(dir, localFilename = $"{Img.GpuModel}" + "-" + $"{indx}" + $"{format}");
 
                 Img.ImageDir = localFilename;
-                context.ImageGPUs.Add(Img);
-                Console.WriteLine(Img.GPUModel);
+                context.ImageGpus.Add(Img);
+                Console.WriteLine(Img.GpuModel);
             }
             context.SaveChanges();
             Console.WriteLine("DB Finally!");

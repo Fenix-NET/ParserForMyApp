@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Npgsql.Internal.TypeHandlers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParserForMyApp.Models
 {
-    public class CPU
+    public class Cpu
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string? Manufacturer { get; set; }
 
         public string? Model { get; set; }
@@ -19,6 +21,7 @@ namespace ParserForMyApp.Models
         public string Mass { get; set; }
 
         public decimal Price { get; set; }
+        //public Guid NameImg { get; set; }
 
     }
 }

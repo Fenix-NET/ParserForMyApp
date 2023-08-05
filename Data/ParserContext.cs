@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParserForMyApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParserForMyApp.Models
+namespace ParserForMyApp.Data
 {
     public class ParserContext : DbContext
     {
@@ -18,17 +19,17 @@ namespace ParserForMyApp.Models
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseNpgsql(DbPath);
         public DbSet<Case> Cases { get; set; }
-        public DbSet<CPU> CPUs { get; set; }
-        public DbSet<GPU> GPUs { get; set; }
+        public DbSet<Cpu> Cpus { get; set; }
+        public DbSet<Gpu> Gpus { get; set; }
         public DbSet<Motherboard> Motherboards { get; set; }
-        public DbSet<PSU> PSUs { get; set; }
-        public DbSet<RAM> RAMs { get; set; }
+        public DbSet<Psu> Psus { get; set; }
+        public DbSet<Ram> Rams { get; set; }
         public DbSet<ImageCase> ImageCases { get; set; }
-        public DbSet<ImageCPU> ImageCPUs { get; set; }
-        public DbSet<ImageGPU> ImageGPUs { get; set; }
+        public DbSet<ImageCpu> ImageCpus { get; set; }
+        public DbSet<ImageGpu> ImageGpus { get; set; }
         public DbSet<ImageMotherboard> ImageMotherboards { get; set; }
-        public DbSet<ImagePSU> ImagePSUs { get; set; }
-        public DbSet<ImageRAM> ImageRAMs { get; set; }
+        public DbSet<ImagePsu> ImagePsus { get; set; }
+        public DbSet<ImageRam> ImageRams { get; set; }
 
     }
 }

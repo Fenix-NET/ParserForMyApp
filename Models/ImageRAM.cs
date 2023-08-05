@@ -1,9 +1,9 @@
 ﻿namespace ParserForMyApp.Models
 {
-    public class ImageRAM
+    public class ImageRam
     {
         public int Id { get; set; }
-        public string RAMModel { get; set; }
+        public string RamModel { get; set; }
         public string ImageDir { get; set; }
 
     }

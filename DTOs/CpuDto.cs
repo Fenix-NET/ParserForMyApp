@@ -2,7 +2,7 @@
 
 namespace ParserForMyApp.DTOs
 {
-    public class CPU
+    public class CpuDto
     {
         public string? Manufacturer { get; set; }
 

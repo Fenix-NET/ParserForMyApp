@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 using System;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp
 {
-    public class ImageRAMParse : BaseParseClass
+    public class ImageRamParse : BaseParseClass
     {
 
         public async Task StartParsImage(ParserContext context)
@@ -20,12 +21,12 @@ namespace ParserForMyApp
             Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
-                ImageRAM Img = new();
+                ImageRam Img = new();
                 using var doc = GetPage(link);
                 string imgurl = default;
                 string imgUrl2 = default;
                 string editor = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
-                Img.RAMModel = editor.Replace('/', '-') ?? "n/a";
+                Img.RamModel = editor.Replace('/', '-') ?? "n/a";
                 //var imgUrl = doc.GetElementById("goods_photo").GetAttribute("href").ToString();
                 try { imgurl = doc.GetElementById("goods_photo").GetAttribute("href").ToString(); }
                 catch (Exception ex) { imgurl = doc.GetElementById("main_photo").GetAttribute("src").ToString(); }
@@ -34,16 +35,16 @@ namespace ParserForMyApp
                 //string formatimg = imgUrl2.Substring(2, imgUrl.IndexOf("."));
                 string format = Regex.Replace(imgUrl2, @"\D+.+?(?=\.)", "");       // Это ОНО!
 
-                string localFilename = $"{dir}" + "\\" + $"{Img.RAMModel}" + $"{format}";
+                string localFilename = $"{dir}" + "\\" + $"{Img.RamModel}" + $"{format}";
 
                 var url = imgurl ?? imgUrl2;
                 Random random = new Random();
                 int indx = random.Next(100, 9999);
-                await url.DownloadFileAsync(dir, localFilename = $"{Img.RAMModel}" + "-" + $"{indx}" + $"{format}");
+                await url.DownloadFileAsync(dir, localFilename = $"{Img.RamModel}" + "-" + $"{indx}" + $"{format}");
 
                 Img.ImageDir = localFilename;
-                context.ImageRAMs.Add(Img);
-                Console.WriteLine(Img.RAMModel);
+                context.ImageRams.Add(Img);
+                Console.WriteLine(Img.RamModel);
             }
             context.SaveChanges();
             Console.WriteLine("DB Finally!");

@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 using System;
 using System.IO;

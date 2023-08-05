@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 using System;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp
 {
-    public class ImagesCPUParse : BaseParseClass
+    public class ImageCpuParse : BaseParseClass
     {
 
         public async Task StartParsImage(ParserContext context)
@@ -20,12 +21,12 @@ namespace ParserForMyApp
             Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
-                ImageCPU Img = new();
+                ImageCpu Img = new();
                 using var doc = GetPage(link);
                 string imgurl = default;
                 string imgUrl2 = default;
                 string editor = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
-                Img.CPUModel = editor.Replace('/', '-') ?? "n/a";
+                Img.CpuModel = editor.Replace('/', '-') ?? "n/a";
                 //var imgUrl = doc.GetElementById("goods_photo").GetAttribute("href").ToString();
                 try { imgurl = doc.GetElementById("goods_photo").GetAttribute("href").ToString(); }
                 catch (Exception ex) { imgurl = doc.GetElementById("main_photo").GetAttribute("src").ToString(); }
@@ -34,16 +35,16 @@ namespace ParserForMyApp
                 //string formatimg = imgUrl2.Substring(2, imgUrl.IndexOf("."));
                 string format = Regex.Replace(imgUrl2, @"\D+.+?(?=\.)", "");       // Это ОНО!
 
-                string localFilename = $"{dir}" + "\\" + $"{Img.CPUModel}" + $"{format}";
+                string localFilename = $"{dir}" + "\\" + $"{Img.CpuModel}" + $"{format}";
 
                 var url = imgurl ?? imgUrl2;
                 Random random = new Random();
                 int indx = random.Next(100, 9999);
-                await url.DownloadFileAsync(dir, localFilename = $"{Img.CPUModel}" + "-" + $"{indx}" + $"{format}");
+                await url.DownloadFileAsync(dir, localFilename = $"{Img.CpuModel}" + "-" + $"{indx}" + $"{format}");
 
                 Img.ImageDir = localFilename;
-                context.ImageCPUs.Add(Img);
-                Console.WriteLine(Img.CPUModel);
+                context.ImageCpus.Add(Img);
+                Console.WriteLine(Img.CpuModel);
             }
             context.SaveChanges();
             Console.WriteLine("DB Finally!");

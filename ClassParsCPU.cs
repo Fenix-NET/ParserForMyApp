@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
+using ParserForMyApp.Data;
 
 namespace ParserForMyApp
 {
-    public class ClassParsCPU : BaseParseClass
+    public class ClassParsCpu : BaseParseClass
     {
 
-        public async Task StartParsCPU(ParserContext _context)
+        public async Task StartParsCpu(ParserContext _context)
         {
             List<string> listref = GetListRef();
             Console.WriteLine("Начало парсинга CPU");
@@ -17,7 +18,7 @@ namespace ParserForMyApp
 
             foreach (string link in listref)
             {
-                CPU _cpu = new();
+                Cpu _cpu = new();
                 using var doc = GetPage(link);
 
                 _cpu.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
@@ -48,7 +49,7 @@ namespace ParserForMyApp
                 Console.WriteLine(_cpu.Price);
                 Console.WriteLine(new string('.', 80));
 
-                _context.CPUs.Add(_cpu);
+                _context.Cpus.Add(_cpu);
 
             }
             _context.SaveChanges();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp.DTOs
 {
-    public class PSU
+    public class PsuDto
     {
         public string Manufacturer { get; set; }
 

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 
 namespace ParserForMyApp
 {
-    public class ClassParsGPU : BaseParseClass
+    public class ClassParsGpu : BaseParseClass
     {
 
-        public void StartParseGPU(ParserContext _context)
+        public void StartParseGpu(ParserContext _context)
         {
 
             List<string> listref = GetListRef();
@@ -17,7 +18,7 @@ namespace ParserForMyApp
 
             foreach (string link in listref)
             {
-                GPU _gpu = new();
+                Gpu _gpu = new();
                 using var doc = GetPage(link);
 
                 _gpu.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
@@ -54,7 +55,7 @@ namespace ParserForMyApp
                 Console.WriteLine(_gpu.Price);
                 Console.WriteLine(new string('.', 80));
 
-                _context.GPUs.Add(_gpu);
+                _context.Gpus.Add(_gpu);
 
             }
             _context.SaveChanges();

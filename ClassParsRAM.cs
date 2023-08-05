@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
+using ParserForMyApp.Data;
 
 namespace ParserForMyApp
 {
-    public class ClassParsRAM : BaseParseClass
+    public class ClassParsRam : BaseParseClass
     {
 
-        public async Task StartParseRAM(ParserContext _context)
+        public async Task StartParseRam(ParserContext _context)
         {
 
             List<string> listref = GetListRef();
@@ -17,14 +18,14 @@ namespace ParserForMyApp
 
             foreach (string link in listref)
             {
-                RAM _ram = new();
+                Ram _ram = new();
                 using var doc = GetPage(link);
 
                 _ram.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
 
                 _ram.Model = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                _ram.DDR = doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent ?? "n/a";
+                _ram.Ddr = doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try { _ram.Memory = ushort.Parse(Regex.Replace(doc.QuerySelector(MemorySelector).FirstChild.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _ram.Memory = 0; }
@@ -39,14 +40,14 @@ namespace ParserForMyApp
 
                 Console.WriteLine(_ram.Manufacturer);
                 Console.WriteLine(_ram.Model);
-                Console.WriteLine(_ram.DDR);
+                Console.WriteLine(_ram.Ddr);
                 Console.WriteLine(_ram.Memory);
                 Console.WriteLine(_ram.Nmodule);
                 Console.WriteLine(_ram.Mass);
                 Console.WriteLine(_ram.Price);
                 Console.WriteLine(new string('.', 80));
 
-                _context.RAMs.Add(_ram);
+                _context.Rams.Add(_ram);
 
             }
             _context.SaveChanges();

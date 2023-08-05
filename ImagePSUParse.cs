@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 using System;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp
 {
-    public class ImagePSUParse : BaseParseClass
+    public class ImagePsuParse : BaseParseClass
     {
 
         public async Task StartParsImage(ParserContext context)
@@ -20,12 +21,12 @@ namespace ParserForMyApp
             Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
-                ImagePSU Img = new();
+                ImagePsu Img = new();
                 using var doc = GetPage(link);
                 string imgurl = default;
                 string imgUrl2 = default;
                 string editor = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
-                Img.PSUModel = editor.Replace('/', '-') ?? "n/a";
+                Img.PsuModel = editor.Replace('/', '-') ?? "n/a";
                 //var imgUrl = doc.GetElementById("goods_photo").GetAttribute("href").ToString();
                 try { imgurl = doc.GetElementById("goods_photo").GetAttribute("href").ToString(); }
                 catch (Exception ex) { imgurl = doc.GetElementById("main_photo").GetAttribute("src").ToString(); }
@@ -34,16 +35,16 @@ namespace ParserForMyApp
                 //string formatimg = imgUrl2.Substring(2, imgUrl.IndexOf("."));
                 string format = Regex.Replace(imgUrl2, @"\D+.+?(?=\.)", "");       // Это ОНО!
 
-                string localFilename = $"{dir}" + "\\" + $"{Img.PSUModel}" + $"{format}";
+                string localFilename = $"{dir}" + "\\" + $"{Img.PsuModel}" + $"{format}";
 
                 var url = imgurl ?? imgUrl2;
                 Random random = new Random();
                 int indx = random.Next(100, 9999);
-                await url.DownloadFileAsync(dir, localFilename = $"{Img.PSUModel}" + "-" + $"{indx}" + $"{format}");
+                await url.DownloadFileAsync(dir, localFilename = $"{Img.PsuModel}" + "-" + $"{indx}" + $"{format}");
 
                 Img.ImageDir = localFilename;
-                context.ImagePSUs.Add(Img);
-                Console.WriteLine(Img.PSUModel);
+                context.ImagePsus.Add(Img);
+                Console.WriteLine(Img.PsuModel);
             }
             context.SaveChanges();
             Console.WriteLine("DB Finally!");

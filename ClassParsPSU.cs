@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ParserForMyApp.Data;
 using ParserForMyApp.Models;
 
 namespace ParserForMyApp
 {
-    public class ClassParsPSU : BaseParseClass
+    public class ClassParsPsu : BaseParseClass
     {
 
-        public async Task StartParsePSU(ParserContext _context)
+        public async Task StartParsePsu(ParserContext _context)
         {
 
             List<string> listref = GetListRef();
@@ -17,7 +18,7 @@ namespace ParserForMyApp
 
             foreach (string link in listref)
             {
-                PSU _psu = new();
+                Psu _psu = new();
                 using var doc = GetPage(link);
 
                 _psu.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
@@ -43,7 +44,7 @@ namespace ParserForMyApp
                 Console.WriteLine(_psu.Price);
                 Console.WriteLine(new string('.', 80));
 
-                _context.PSUs.Add(_psu);
+                _context.Psus.Add(_psu);
 
             }
             _context.SaveChanges();

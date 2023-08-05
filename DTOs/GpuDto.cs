@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp.DTOs
 {
-    public class GPU
+    public class GpuDto
     {
         public string? Manufacturer { get; set; }
 

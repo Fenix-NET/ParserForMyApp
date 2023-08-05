@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ParserForMyApp.Models
 {
-    public class PSU
+    public class Psu
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Manufacturer { get; set; }
 
         public string Model { get; set; }

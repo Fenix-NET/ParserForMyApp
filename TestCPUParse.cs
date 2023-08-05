@@ -1,16 +1,17 @@
 ﻿using ParserForMyApp.DTOs;
+using ParserForMyApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ParserForMyApp
 {
-    public class TestCPUParse : BaseParseClass
+    public class TestCpuParse : BaseParseClass
     {
 
-        public List<CPU> _cpus = new();
-        public TestCPUParse() { }
-        public async Task StartParsCPU()
+        public List<Cpu> _cpus = new();
+        public TestCpuParse() { }
+        public async Task StartParsCpu()
         {
             List<string> listref = GetListRef();
             Console.WriteLine("Начало парсинга CPU");
@@ -20,7 +21,7 @@ namespace ParserForMyApp
 
             foreach (string link in listref)
             {
-                CPU _cpu = new();
+                Cpu _cpu = new();
                 using var doc = GetPage(link);
 
                 _cpu.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
@@ -33,19 +34,19 @@ namespace ParserForMyApp
                 _cpus.Add(_cpu);
             }
             Console.WriteLine("Конец работы");
-            foreach (CPU cPUparse in _cpus)
+            foreach (Cpu cPUparse in _cpus)
             {
                 Console.WriteLine(cPUparse.Manufacturer);
                 Console.WriteLine(cPUparse.Model);
                 Console.WriteLine(cPUparse.Socket);
                 Console.WriteLine(new string('.', 80));
             }
-            //for (int i = 0; i < CPUs.Count; i++)
+            //for (int i = 0; i < Cpus.Count; i++)
             //{
-            //    Console.WriteLine($"Производитель : {CPUs[i].Manufacturer}");
-            //    Console.WriteLine($"Модель : {CPUs[i].Model}");
-            //    Console.WriteLine($"Сокет : {CPUs[i].Socket}");
-            //    Console.WriteLine($"Цена : {CPUs[i].Price}");
+            //    Console.WriteLine($"Производитель : {Cpus[i].Manufacturer}");
+            //    Console.WriteLine($"Модель : {Cpus[i].Model}");
+            //    Console.WriteLine($"Сокет : {Cpus[i].Socket}");
+            //    Console.WriteLine($"Цена : {Cpus[i].Price}");
             //    Console.WriteLine("================================================================");
             //}
 

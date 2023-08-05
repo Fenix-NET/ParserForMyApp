@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
+using ParserForMyApp.Data;
 
 namespace ParserForMyApp
 {                                                       //Выделение общей логики в отдельные сервисы
@@ -17,7 +18,6 @@ namespace ParserForMyApp
             List<string> listref = GetListRef();
 
             Console.WriteLine("Начало парсинга Motherboard");
-
 
             foreach (string link in listref)
             {
