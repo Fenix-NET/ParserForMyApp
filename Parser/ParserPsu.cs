@@ -36,12 +36,18 @@ namespace ParserForMyApp.Parser
                 try { _psu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _psu.Price = 0; }
 
+                _psu.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
+
+                _psu.ImageName = doc.QuerySelector
+
+                Console.WriteLine(_psu.Name);
                 Console.WriteLine(_psu.Manufacturer);
                 Console.WriteLine(_psu.Model);
                 Console.WriteLine(_psu.Power);
                 Console.WriteLine(_psu.Sertificate);
                 Console.WriteLine(_psu.Mass);
                 Console.WriteLine(_psu.Price);
+                Console.WriteLine(_psu.ImageName);
                 Console.WriteLine(new string('.', 80));
 
                 _context.Psu.Add(_psu);

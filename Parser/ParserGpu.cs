@@ -45,10 +45,10 @@ namespace ParserForMyApp.Parser
                 try { _gpu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _gpu.Price = 0; }
 
-                _gpu.VerDisplayPort = doc.QuerySelector(verDisplayPortGpuSelector)
-                _gpu.VerHdmi = doc.QuerySelector(verHdmiGpuSelector)
-                _gpu.HerzMemory = doc.QuerySelector(herzMemoryGpuSelector)
-                _gpu.Name = doc.QuerySelector(nameSelector)
+                _gpu.VerDisplayPort = doc.QuerySelector(verDisplayPortGpuSelector)?.FirstChild?.TextContent ?? "n/a";
+                _gpu.VerHdmi = doc.QuerySelector(verHdmiGpuSelector)?.FirstChild?.TextContent ?? "n/a";
+                _gpu.HerzMemory = doc.QuerySelector(herzMemoryGpuSelector)?.FirstChild?.TextContent ?? "n/a";
+                _gpu.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
                 _gpu.ImageName = doc.QuerySelector()
 
 

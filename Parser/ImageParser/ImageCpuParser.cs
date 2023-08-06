@@ -6,7 +6,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ParserForMyApp.Parser
+namespace ParserForMyApp.Parser.ImageParser
 {
     public class ImageCpuParser : BaseParser, IParser
     {

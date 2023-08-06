@@ -36,10 +36,10 @@ namespace ParserForMyApp.Parser
                 _cpu.Socket = doc.QuerySelector(socketSelector).FirstChild?.TextContent ?? "n/a";
 
                 _cpu.Mass = doc.QuerySelector(massSelector).FirstChild?.TextContent ?? "n/a";
-                _cpu.IntegratedGraphics = doc.QuerySelector(IntegratedGraphicsCpuSelector)
-                _cpu.MaxMemorySize = doc.QuerySelector(maxMemorySizeCpuSelector)
-                _cpu.MaxMemoryType = doc.QuerySelector(maxMemoryTypeCpuSelector)
-                _cpu.Name = doc.QuerySelector(nameSelector)
+                _cpu.IntegratedGraphics = doc.QuerySelector(IntegratedGraphicsCpuSelector).TextContent ?? "n/a";
+                _cpu.MaxMemorySize = int.Parse(Regex.Replace(doc.QuerySelector(maxMemorySizeCpuSelector)?.TextContent, @"\D+", ""));
+                _cpu.MaxMemoryType = doc.QuerySelector(maxMemoryTypeCpuSelector).TextContent ?? "n/a";
+                _cpu.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
                 _cpu.ImageName = doc.QuerySelector
 
                 try { _cpu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }

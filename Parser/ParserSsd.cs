@@ -40,7 +40,7 @@ namespace ParserForMyApp.Parser
                 try { _ssd.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _ssd.Price = 0; }
 
-                _ssd.Name = doc.QuerySelector(nameSelector)
+                _ssd.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
 
                 _ssd.ImageName = doc.QuerySelector()
 

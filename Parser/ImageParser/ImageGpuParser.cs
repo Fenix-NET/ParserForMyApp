@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp.Parser
+namespace ParserForMyApp.Parser.ImageParser
 {
     public class ImageGpuParser : BaseParser, IParser //where T:class
     {

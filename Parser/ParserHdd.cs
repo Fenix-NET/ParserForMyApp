@@ -29,16 +29,16 @@ namespace ParserForMyApp.Parser
 
                 _hdd.MemorySize = doc.QuerySelector(hddMemorySizeSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                _hdd.SpindleSpeed = doc.QuerySelector(hddSpindleSpeedSelector)
+                _hdd.SpindleSpeed = doc.QuerySelector(hddSpindleSpeedSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                _hdd.Format = doc.QuerySelector(hddFormatSelector)
+                _hdd.Format = doc.QuerySelector(hddFormatSelector).RemoveChild(doc.QuerySelector("a")).TextContent ?? "n/a";
 
                 _hdd.Mass = doc.QuerySelector(massSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                try { _ssd.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _ssd.Price = 0; }
+                try { _hdd.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
+                catch (Exception ex) { _hdd.Price = 0; }
 
-                _hdd.Name = doc.QuerySelector(nameSelector)
+                _hdd.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
 
                 _hdd.ImageName = doc.QuerySelector()
 

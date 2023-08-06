@@ -39,7 +39,7 @@ namespace ParserForMyApp.Parser
                 catch (Exception ex) { _ram.Price = 0; }
 
                 _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector)
-                _ram.Name = doc.QuerySelector(nameSelector)
+                _ram.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
                 _ram.ImageName = doc.QuerySelector()
 
                 Console.WriteLine(_ram.Name);
