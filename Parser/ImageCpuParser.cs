@@ -6,12 +6,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {
-    public class ImageCpuParse : BaseParseClass
+    public class ImageCpuParser : BaseParser, IParser
     {
 
-        public async Task StartParsImage(ParserContext context)
+        public async Task StartParse(ParserContext context)
         {
             Console.WriteLine("Парсинг CPU");
             var listref = GetListRef();

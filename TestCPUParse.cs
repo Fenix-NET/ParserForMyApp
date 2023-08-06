@@ -1,12 +1,13 @@
 ﻿using ParserForMyApp.DTOs;
 using ParserForMyApp.Models;
+using ParserForMyApp.Parser;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ParserForMyApp
 {
-    public class TestCpuParse : BaseParseClass
+    public class TestCpuParse : BaseParser
     {
 
         public List<Cpu> _cpus = new();

@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {
-    public class ImageGpuParse : BaseParseClass //where T:class
+    public class ImageGpuParser : BaseParser, IParser //where T:class
     {
         //public string ImgUrl { get; set; }
         //public string ImgName { get; set; }
@@ -31,7 +31,7 @@ namespace ParserForMyApp
         //    var imageBytes = await httpClient.GetByteArrayAsync(uri);
         //    await File.WriteAllBytesAsync(path, imageBytes);
         //}
-        public async Task StartParsImage(ParserContext context)
+        public async Task StartParse(ParserContext context)
         {
             Console.WriteLine("Парсинг GPU");
             var listref = GetListRef();

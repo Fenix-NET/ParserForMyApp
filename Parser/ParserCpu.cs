@@ -5,16 +5,16 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {
-    public class ClassParsCpu : BaseParseClass
+    public class ParserCpu : BaseParser, IParser
     {
 
-        public async Task StartParsCpu(ParserContext _context)
+        public async Task StartParse(ParserContext _context)
         {
             List<string> listref = GetListRef();
             Console.WriteLine("Начало парсинга CPU");
-            
+
 
             foreach (string link in listref)
             {
@@ -27,29 +27,39 @@ namespace ParserForMyApp
 
                 _cpu.Hherz = doc.QuerySelector(hherzSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                try { _cpu.Core = sbyte.Parse(doc.QuerySelector(coreSelector)?.FirstChild.TextContent); }
+                try { _cpu.Core = int.Parse(doc.QuerySelector(coreSelector)?.FirstChild.TextContent); }
                 catch { _cpu.Core = 0; }
 
-                try { _cpu.Streams = sbyte.Parse(doc.QuerySelector(streamsSelector)?.FirstChild.TextContent); }
+                try { _cpu.Streams = int.Parse(doc.QuerySelector(streamsSelector)?.FirstChild.TextContent); }
                 catch { _cpu.Streams = 0; }
 
                 _cpu.Socket = doc.QuerySelector(socketSelector).FirstChild?.TextContent ?? "n/a";
 
                 _cpu.Mass = doc.QuerySelector(massSelector).FirstChild?.TextContent ?? "n/a";
+                _cpu.IntegratedGraphics = doc.QuerySelector(IntegratedGraphicsCpuSelector)
+                _cpu.MaxMemorySize = doc.QuerySelector(maxMemorySizeCpuSelector)
+                _cpu.MaxMemoryType = doc.QuerySelector(maxMemoryTypeCpuSelector)
+                _cpu.Name = doc.QuerySelector(nameSelector)
+                _cpu.ImageName = doc.QuerySelector
 
                 try { _cpu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _cpu.Price = 0; }
+                Console.WriteLine(_cpu.Name);
                 Console.WriteLine(_cpu.Manufacturer);
                 Console.WriteLine(_cpu.Model);
                 Console.WriteLine(_cpu.Hherz);
                 Console.WriteLine(_cpu.Core);
                 Console.WriteLine(_cpu.Streams);
                 Console.WriteLine(_cpu.Socket);
+                Console.WriteLine(_cpu.IntegratedGraphics);
+                Console.WriteLine(_cpu.MaxMemorySize);
+                Console.WriteLine(_cpu.MaxMemoryType);
                 Console.WriteLine(_cpu.Mass);
                 Console.WriteLine(_cpu.Price);
+                Console.WriteLine(_cpu.ImageName);
                 Console.WriteLine(new string('.', 80));
 
-                _context.Cpus.Add(_cpu);
+                _context.Cpu.Add(_cpu);
 
             }
             _context.SaveChanges();

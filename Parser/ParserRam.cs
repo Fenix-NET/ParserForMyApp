@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {
-    public class ClassParsRam : BaseParseClass
+    public class ParserRam : BaseParser, IParser
     {
 
-        public async Task StartParseRam(ParserContext _context)
+        public async Task StartParse(ParserContext _context)
         {
 
             List<string> listref = GetListRef();
@@ -27,8 +27,8 @@ namespace ParserForMyApp
 
                 _ram.Ddr = doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                try { _ram.Memory = ushort.Parse(Regex.Replace(doc.QuerySelector(MemorySelector).FirstChild.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _ram.Memory = 0; }
+                try { _ram.MemorySize = int.Parse(Regex.Replace(doc.QuerySelector(MemorySizeSelector).FirstChild.TextContent, @"\D+", "")); }
+                catch (Exception ex) { _ram.MemorySize = 0; }
 
                 try { _ram.Nmodule = byte.Parse(doc.QuerySelector(NmodulSelector)?.FirstChild.TextContent); }
                 catch (Exception ex) { _ram.Nmodule = 0; }
@@ -38,16 +38,23 @@ namespace ParserForMyApp
                 try { _ram.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _ram.Price = 0; }
 
+                _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector)
+                _ram.Name = doc.QuerySelector(nameSelector)
+                _ram.ImageName = doc.QuerySelector()
+
+                Console.WriteLine(_ram.Name);
                 Console.WriteLine(_ram.Manufacturer);
                 Console.WriteLine(_ram.Model);
                 Console.WriteLine(_ram.Ddr);
-                Console.WriteLine(_ram.Memory);
+                Console.WriteLine(_ram.MemorySize);
                 Console.WriteLine(_ram.Nmodule);
+                Console.WriteLine(_ram.MemoryHerz);
                 Console.WriteLine(_ram.Mass);
                 Console.WriteLine(_ram.Price);
+                Console.WriteLine(_ram.ImageName);
                 Console.WriteLine(new string('.', 80));
 
-                _context.Rams.Add(_ram);
+                _context.Ram.Add(_ram);
 
             }
             _context.SaveChanges();

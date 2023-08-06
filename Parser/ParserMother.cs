@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {                                                       //Выделение общей логики в отдельные сервисы
-    public class ClassParseMother : BaseParseClass                   //Оптимизация работы и времени отклика.
+    public class ParserMother : BaseParser, IParser                   //Оптимизация работы и времени отклика.
     {
 
-        public async Task StartParsMother(ParserContext _context)
+        public async Task StartParse(ParserContext _context)
         {
             Console.WriteLine("Подготовка парсера");
 
@@ -38,12 +38,29 @@ namespace ParserForMyApp
                 try { _mother.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _mother.Price = 0; }
 
+                _mother.Chipset = doc.QuerySelector(chipsetMotherSelector)
+                _mother.MemoryType = doc.QuerySelector(memoryTypeMotherSelector)
+                _mother.MemorySlots = doc.QuerySelector(memorySlotsMotherSelector)
+                _mother.MaxMemoryHerz = doc.QuerySelector(maxMemoryHerzMotherSelector)
+                _mother.NumM2 = doc.QuerySelector(numM2MotherSelector)
+                _mother.MaxMemorySize = doc.QuerySelector(maxMemorySizeMotherSelector)
+                _mother.Name = doc.QuerySelector(nameSelector)
+                _mother.ImageName = doc.QuerySelector()
+
+                Console.WriteLine(_mother.Name);
                 Console.WriteLine(_mother.Manufacturer);
                 Console.WriteLine(_mother.Model);
                 Console.WriteLine(_mother.Socket);
                 Console.WriteLine(_mother.Form);
+                Console.WriteLine(_mother.Chipset);
+                Console.WriteLine(_mother.MemoryType);
+                Console.WriteLine(_mother.MemorySlots);
+                Console.WriteLine(_mother.MaxMemoryHerz);
+                Console.WriteLine(_mother.NumM2);
+                Console.WriteLine(_mother.MaxMemorySize);
                 Console.WriteLine(_mother.Mass);
                 Console.WriteLine(_mother.Price);
+                Console.WriteLine(_mother.ImageName);
                 Console.WriteLine(new string('.', 80));
 
                 _context.Motherboards.Add(_mother);

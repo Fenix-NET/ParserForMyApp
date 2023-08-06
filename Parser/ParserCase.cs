@@ -5,19 +5,19 @@ using System.Text.RegularExpressions;
 using ParserForMyApp.Models;
 using ParserForMyApp.Data;
 
-namespace ParserForMyApp
+namespace ParserForMyApp.Parser
 {
-    public class ClassParsCase : BaseParseClass
+    public class ParserCase : BaseParser, IParser
     {
 
-        public async Task StartParsCase(ParserContext _context)
+        public async Task StartParse(ParserContext _context)
         {
             Console.WriteLine("Подготовка парсера");
 
             List<string> listref = GetListRef(); ;
 
             Console.WriteLine("Начало парсинга Корпусов");
-           
+
 
             foreach (string link in listref)
             {
@@ -38,15 +38,21 @@ namespace ParserForMyApp
                 try { _case.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _case.Price = 0; }
 
+                _case.Name = doc.QuerySelector(nameSelector)
+
+                _case.ImageName = doc.QuerySelector()
+
+                Console.WriteLine(_case.Name);
                 Console.WriteLine(_case.Manufacturer);
                 Console.WriteLine(_case.Model);
                 Console.WriteLine(_case.Form);
                 Console.WriteLine(_case.Mass);
                 Console.WriteLine(_case.Materials);
                 Console.WriteLine(_case.Price);
+                Console.WriteLine(_case.ImageName);
                 Console.WriteLine(new string('.', 80));
 
-                _context.Cases.Add(_case);
+                _context.Case.Add(_case);
 
             }
             _context.SaveChanges();
