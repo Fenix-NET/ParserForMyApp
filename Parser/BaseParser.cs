@@ -20,7 +20,8 @@ namespace ParserForMyApp.Parser
         protected string streamsSelector = "td#tdsa23450";
         protected string socketSelector = "td#tdsa1307";
         protected string massSelector = "td#tdsa1672";
-        protected string priceSelector = "a.add_to_cart.btn.btn-t-0.btn-c-6.CanBeSold.pc-component";
+        //protected string priceSelector = "a.add_to_cart.btn.btn-t-0.btn-c-6.CanBeSold.pc-component";
+        protected string priceSelector = "div.price.pc-component-non-used.pc-component-inactive";
         protected string powerSelector = "td#tdsa44456";
         protected string powerSelectorNull = "td#tdsa893";
         protected string techprocSelector = "td#tdsa3735";

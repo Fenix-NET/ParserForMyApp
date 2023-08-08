@@ -38,9 +38,9 @@ namespace ParserForMyApp.Parser
                 try { _hdd.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _hdd.Price = 0; }
 
-                _hdd.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
+                _hdd.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
 
-                _hdd.ImageName = doc.QuerySelector()
+                //_hdd.ImageName = doc.QuerySelector()
 
 
                 Console.WriteLine(_hdd.Name);

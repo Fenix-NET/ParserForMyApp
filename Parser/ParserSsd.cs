@@ -29,20 +29,20 @@ namespace ParserForMyApp.Parser
 
                 _ssd.MemorySize = doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                _ssd.SsdInterface = doc.QuerySelector(ssdInterfaceSelector)
+                _ssd.SsdInterface = doc.QuerySelector(ssdInterfaceSelector)?.TextContent ?? "n/a";
 
-                _ssd.ReadingSpeed = doc.QuerySelector(ssdReadingSpeedSelector)
+                _ssd.ReadingSpeed = doc.QuerySelector(ssdReadingSpeedSelector)?.TextContent ?? "n/a";
 
-                _ssd.RecordingSpeed = doc.QuerySelector(ssdRecordingSpeedSelector)
+                _ssd.RecordingSpeed = doc.QuerySelector(ssdRecordingSpeedSelector)?.TextContent ?? "n/a";
 
                 _ssd.Mass = doc.QuerySelector(massSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try { _ssd.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _ssd.Price = 0; }
 
-                _ssd.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
+                _ssd.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
 
-                _ssd.ImageName = doc.QuerySelector()
+                //_ssd.ImageName = doc.QuerySelector()
 
 
                 Console.WriteLine(_ssd.Name);

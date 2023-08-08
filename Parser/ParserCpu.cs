@@ -36,11 +36,19 @@ namespace ParserForMyApp.Parser
                 _cpu.Socket = doc.QuerySelector(socketSelector).FirstChild?.TextContent ?? "n/a";
 
                 _cpu.Mass = doc.QuerySelector(massSelector).FirstChild?.TextContent ?? "n/a";
-                _cpu.IntegratedGraphics = doc.QuerySelector(IntegratedGraphicsCpuSelector).TextContent ?? "n/a";
-                _cpu.MaxMemorySize = int.Parse(Regex.Replace(doc.QuerySelector(maxMemorySizeCpuSelector)?.TextContent, @"\D+", ""));
-                _cpu.MaxMemoryType = doc.QuerySelector(maxMemoryTypeCpuSelector).TextContent ?? "n/a";
-                _cpu.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
-                _cpu.ImageName = doc.QuerySelector
+                _cpu.IntegratedGraphics = doc.QuerySelector(IntegratedGraphicsCpuSelector)?.TextContent ?? "n/a";
+                try
+                {
+                    _cpu.MaxMemorySize = int.Parse(Regex.Replace(doc.QuerySelector(maxMemorySizeCpuSelector)?.TextContent, @"\D+", ""));
+                }
+                catch (Exception)
+                {
+                    _cpu.MaxMemorySize = 0;
+                }
+                
+                _cpu.MaxMemoryType = doc.QuerySelector(maxMemoryTypeCpuSelector)?.TextContent ?? "n/a";
+                _cpu.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
+                //_cpu.ImageName = doc.QuerySelector
 
                 try { _cpu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _cpu.Price = 0; }

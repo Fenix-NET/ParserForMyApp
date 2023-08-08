@@ -26,12 +26,12 @@ namespace ParserForMyApp.Data
         public DbSet<Ram> Ram { get; set; }
         public DbSet<Ssd> Ssd { get; set; }
         public DbSet<Hdd> Hdd { get; set; }
-        //public DbSet<ImageCase> ImageCases { get; set; }
-        //public DbSet<ImageCpu> ImageCpus { get; set; }
-        //public DbSet<ImageGpu> ImageGpus { get; set; }
-        //public DbSet<ImageMotherboard> ImageMotherboards { get; set; }
-        //public DbSet<ImagePsu> ImagePsus { get; set; }
-        //public DbSet<ImageRam> ImageRams { get; set; }
+        public DbSet<ImageCase> ImageCases { get; set; }
+        public DbSet<ImageCpu> ImageCpus { get; set; }
+        public DbSet<ImageGpu> ImageGpus { get; set; }
+        public DbSet<ImageMotherboard> ImageMotherboards { get; set; }
+        public DbSet<ImagePsu> ImagePsus { get; set; }
+        public DbSet<ImageRam> ImageRams { get; set; }
 
     }
 }

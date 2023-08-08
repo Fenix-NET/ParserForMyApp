@@ -38,9 +38,9 @@ namespace ParserForMyApp.Parser
                 try { _ram.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
                 catch (Exception ex) { _ram.Price = 0; }
 
-                _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector)
-                _ram.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
-                _ram.ImageName = doc.QuerySelector()
+                _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector).TextContent ?? "n/a";
+                _ram.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
+                //_ram.ImageName = doc.QuerySelector()
 
                 Console.WriteLine(_ram.Name);
                 Console.WriteLine(_ram.Manufacturer);

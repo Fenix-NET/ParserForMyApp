@@ -48,8 +48,8 @@ namespace ParserForMyApp.Parser
                 _gpu.VerDisplayPort = doc.QuerySelector(verDisplayPortGpuSelector)?.FirstChild?.TextContent ?? "n/a";
                 _gpu.VerHdmi = doc.QuerySelector(verHdmiGpuSelector)?.FirstChild?.TextContent ?? "n/a";
                 _gpu.HerzMemory = doc.QuerySelector(herzMemoryGpuSelector)?.FirstChild?.TextContent ?? "n/a";
-                _gpu.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
-                _gpu.ImageName = doc.QuerySelector()
+                _gpu.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
+                //_gpu.ImageName = doc.QuerySelector()
 
 
                 Console.WriteLine(_gpu.Name);

@@ -10,7 +10,7 @@
         public string? MemoryType { get; set; }
         public int MemorySlots { get; set; }
         public string? MaxMemoryHerz { get; set; }
-        public int MaxMemorySize { get; set; }
+        public string? MaxMemorySize { get; set; }
         public string Socket { get; set; }
         public string? NumM2 { get; set; }
         public string Form { get; set; }

@@ -39,13 +39,15 @@ namespace ParserForMyApp.Parser
                 catch (Exception ex) { _mother.Price = 0; }
 
                 _mother.Chipset = doc.QuerySelector(chipsetMotherSelector)?.TextContent ?? "n/a";
-                _mother.MemoryType = Regex.Replace(doc.QuerySelector(memoryTypeMotherSelector)?.TextContent, @"\\.+\D", "");
+                _mother.MemoryType = Regex.Replace(doc.QuerySelector(memoryTypeMotherSelector)?.TextContent, @"\.+\D+", "");
                 _mother.MemorySlots = int.Parse(doc.QuerySelector(memorySlotsMotherSelector).TextContent);
                 _mother.MaxMemoryHerz = Regex.Replace(doc.QuerySelector(maxMemoryHerzMotherSelector).TextContent, @"\,\D+", "");
-                _mother.NumM2 = doc.QuerySelector(numM2MotherSelector).RemoveChild(this as INode)?.TextContent ?? "n/a";
-                _mother.MaxMemorySize = doc.QuerySelector(maxMemorySizeMotherSelector)
-                _mother.Name = doc.QuerySelector(nameSelector)?.TextContent ?? "n/a";
-                _mother.ImageName = doc.QuerySelector()
+                _mother.NumM2 = doc.QuerySelector(numM2MotherSelector).FirstChild?.TextContent ?? "n/a";
+                _mother.MaxMemorySize = doc.QuerySelector(maxMemorySizeMotherSelector)?.TextContent;
+                _mother.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
+
+
+                //_mother.ImageName = doc.QuerySelector();
 
                 Console.WriteLine(_mother.Name);
                 Console.WriteLine(_mother.Manufacturer);
