@@ -10,12 +10,14 @@
         public int? MemorySize { get; set; }
         public string? MemoryType { get; set; }
         public string? HerzMemory { get; set; }
+        public string? MaxScreenResolution { get; set; }
         public string? VerDisplayPort { get; set; }
         public string? VerHdmi { get; set; }
 
+        public int? RecommendedPsuPower { get; set; }
         public int? Power { get; set; }
         public string? Mass { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public string ImageName { get; set; }
     }
 }

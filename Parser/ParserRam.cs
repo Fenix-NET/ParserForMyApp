@@ -15,37 +15,40 @@ namespace ParserForMyApp.Parser
 
             List<string> listref = GetListRef();
             Console.WriteLine("Начало парсинга RAM");
-
+            string dir = "C:\\My Project\\PCBuilder\\Images\\RAM";
+            Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
                 Ram _ram = new();
                 using var doc = GetPage(link);
 
                 _ram.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
-
                 _ram.Model = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                _ram.Ddr = doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent ?? "n/a";
+                try {_ram.MemoryType = Regex.Match(doc.QuerySelector(DDRSelector)?.FirstChild?.TextContent, @"(DDR.)").Value; }
+                catch { _ram.MemoryType = "n/a"; }
 
                 try { _ram.MemorySize = int.Parse(Regex.Replace(doc.QuerySelector(MemorySizeSelector).FirstChild.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _ram.MemorySize = 0; }
+                catch (Exception ex) { _ram.MemorySize = null; }
 
                 try { _ram.Nmodule = byte.Parse(doc.QuerySelector(NmodulSelector)?.FirstChild.TextContent); }
-                catch (Exception ex) { _ram.Nmodule = 0; }
+                catch (Exception ex) { continue; }
 
                 _ram.Mass = doc.QuerySelector(massSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try { _ram.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _ram.Price = 0; }
+                catch (Exception ex) { continue; }
 
-                _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector).TextContent ?? "n/a";
-                _ram.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
-                //_ram.ImageName = doc.QuerySelector()
+                try { _ram.MemoryHerz = doc.QuerySelector(MemoryHerzRamSelector).TextContent ?? "n/a";}
+                catch (NullReferenceException) { continue; }
+                string Name = Regex.Replace(doc.QuerySelector(nameSelector)?.TextContent, @"(Выбор редакции)\s+", "");
+                _ram.Name = Regex.Replace(Name, @"^\s+", "");
+                _ram.ImageName = await ParseImage(doc, dir);
 
                 Console.WriteLine(_ram.Name);
                 Console.WriteLine(_ram.Manufacturer);
                 Console.WriteLine(_ram.Model);
-                Console.WriteLine(_ram.Ddr);
+                Console.WriteLine(_ram.MemoryType);
                 Console.WriteLine(_ram.MemorySize);
                 Console.WriteLine(_ram.Nmodule);
                 Console.WriteLine(_ram.MemoryHerz);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ParserForMyApp.Data;
@@ -11,9 +12,11 @@ using ParserForMyApp.Data;
 namespace ParserForMyApp.Migrations
 {
     [DbContext(typeof(ParserContext))]
-    partial class ParserContextModelSnapshot : ModelSnapshot
+    [Migration("20230808180705_m5")]
+    partial class m5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,12 +40,6 @@ namespace ParserForMyApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("InternalBays25")
-                        .HasColumnType("text");
-
-                    b.Property<string>("InternalBays35")
-                        .HasColumnType("text");
-
                     b.Property<string>("Manufacturer")
                         .IsRequired()
                         .HasColumnType("text");
@@ -53,15 +50,6 @@ namespace ParserForMyApp.Migrations
                     b.Property<string>("Materials")
                         .HasColumnType("text");
 
-                    b.Property<string>("MaxCoolerHeight")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MaxGpuLenght")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MaxPsuLength")
-                        .HasColumnType("text");
-
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("text");
@@ -70,26 +58,8 @@ namespace ParserForMyApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PanelButton")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PanelConnector")
-                        .HasColumnType("text");
-
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("PsuFormat")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UsbConnectors")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

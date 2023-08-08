@@ -18,36 +18,47 @@ namespace ParserForMyApp.Parser
             List<string> listref = GetListRef();
 
             Console.WriteLine("Начало парсинга Motherboard");
-
+            string dir = "C:\\My Project\\PCBuilder\\Images\\Motherboard";
+            Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
                 Motherboard _mother = new();
                 using var doc = GetPage(link);
 
                 _mother.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
-
                 _mother.Model = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
-
                 _mother.Socket = doc.QuerySelector(socketSelector)?.FirstChild?.TextContent ?? "n/a";
 
-                try { _mother.Form = Regex.Replace(doc.QuerySelector(formSelector).FirstChild.Text(), @"\W+\d+\D+\d+\D+", ""); }
-                catch (Exception ex) { _mother.Form = doc.QuerySelector(formSelectorNull)?.FirstChild?.TextContent ?? "n/a"; };
-
+                //try { _mother.Form = Regex.Replace(doc.QuerySelector(formSelector).FirstChild.Text(), @"\W+\d+\D+\d+\D+", ""); }
+                //catch (Exception ex) { _mother.Form = doc.QuerySelector(formSelectorNull)?.FirstChild?.TextContent ?? "n/a"; };
+                _mother.Form = doc.QuerySelector(formSelector)?.TextContent ?? "n/a";
                 _mother.Mass = doc.QuerySelector(massSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try { _mother.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _mother.Price = 0; }
+                catch (Exception ex) { continue; }
 
-                _mother.Chipset = doc.QuerySelector(chipsetMotherSelector)?.TextContent ?? "n/a";
-                _mother.MemoryType = Regex.Replace(doc.QuerySelector(memoryTypeMotherSelector)?.TextContent, @"\.+\D+", "");
-                _mother.MemorySlots = int.Parse(doc.QuerySelector(memorySlotsMotherSelector).TextContent);
-                _mother.MaxMemoryHerz = Regex.Replace(doc.QuerySelector(maxMemoryHerzMotherSelector).TextContent, @"\,\D+", "");
-                _mother.NumM2 = doc.QuerySelector(numM2MotherSelector).FirstChild?.TextContent ?? "n/a";
-                _mother.MaxMemorySize = doc.QuerySelector(maxMemorySizeMotherSelector)?.TextContent;
-                _mother.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
+                try { _mother.Chipset = Regex.Replace(doc.QuerySelector(chipsetMotherSelector)?.TextContent, @"(характеристики чипсета)", "");}
+                catch (ArgumentNullException) { continue; }
 
+                try { _mother.MemoryType = Regex.Match(doc.QuerySelector(memoryTypeMotherSelector)?.TextContent, @"(DDR.)").Value;}
+                catch (ArgumentNullException) { _mother.MemoryType = null; }
+                
 
-                //_mother.ImageName = doc.QuerySelector();
+                try { _mother.MemorySlots = int.Parse(doc.QuerySelector(memorySlotsMotherSelector).TextContent);}
+                catch (NullReferenceException) { _mother.MemorySlots = null; }
+                
+                try {_mother.MaxMemoryHerz = Regex.Replace(doc.QuerySelector(maxMemoryHerzMotherSelector).TextContent, @"(совместимая память)", ""); }
+                catch (NullReferenceException) { _mother.MaxMemoryHerz = "n/a"; }
+                
+                try { _mother.NumM2 = byte.Parse(Regex.Replace(doc.QuerySelector(numM2MotherSelector).FirstChild?.TextContent, @"\s\S+", "")); }
+                catch { _mother.NumM2 = 0; }
+                
+                try { _mother.MaxMemorySize = int.Parse(Regex.Replace(doc.QuerySelector(maxMemorySizeMotherSelector)?.TextContent, @"\s\S+", "")); }
+                catch { _mother.MaxMemorySize = null; }
+
+                string Name = Regex.Replace(doc.QuerySelector(nameSelector)?.TextContent, @"(Выбор редакции)\s+", "");
+                _mother.Name = Regex.Replace(Name, @"^\s+", "");
+                _mother.ImageName = await ParseImage(doc, dir);
 
                 Console.WriteLine(_mother.Name);
                 Console.WriteLine(_mother.Manufacturer);
@@ -55,11 +66,11 @@ namespace ParserForMyApp.Parser
                 Console.WriteLine(_mother.Socket);
                 Console.WriteLine(_mother.Form);
                 Console.WriteLine(_mother.Chipset);
-                Console.WriteLine(_mother.MemoryType);
-                Console.WriteLine(_mother.MemorySlots);
-                Console.WriteLine(_mother.MaxMemoryHerz);
-                Console.WriteLine(_mother.NumM2);
                 Console.WriteLine(_mother.MaxMemorySize);
+                Console.WriteLine("Тип памяти: " + _mother.MemoryType);
+                Console.WriteLine("Слотов RAM: " + _mother.MemorySlots);
+                Console.WriteLine(_mother.MaxMemoryHerz);
+                Console.WriteLine("Слотов М2: " + _mother.NumM2);
                 Console.WriteLine(_mother.Mass);
                 Console.WriteLine(_mother.Price);
                 Console.WriteLine(_mother.ImageName);

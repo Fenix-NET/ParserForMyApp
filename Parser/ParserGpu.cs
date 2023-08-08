@@ -15,53 +15,59 @@ namespace ParserForMyApp.Parser
 
             List<string> listref = GetListRef();
             Console.WriteLine("Начало парсинга GPU");
-
+            string dir = "C:\\My Project\\PCBuilder\\Images\\GPU";
+            Directory.CreateDirectory(dir);
             foreach (string link in listref)
             {
                 Gpu _gpu = new();
                 using var doc = GetPage(link);
 
                 _gpu.Manufacturer = doc.QuerySelector(manufacturerSelector)?.TextContent ?? "n/a";
-
                 _gpu.Model = doc.QuerySelector(modelSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try
                 {
-                    _gpu.Power = int.Parse(Regex.Replace(doc.QuerySelector(powerSelector).TextContent, @"\D+", ""));
+                    _gpu.RecommendedPsuPower = int.Parse(Regex.Replace(doc.QuerySelector(powerGpuSelector).TextContent, @"\D+", ""));
                 }
                 catch
                 {
-                    try { _gpu.Power = int.Parse(Regex.Replace(doc.QuerySelector(powerSelectorNull).TextContent, @"\D+", "")); }
-                    catch { _gpu.Power = 0; }
+                    _gpu.RecommendedPsuPower = null;
                 }
+                
+                try { _gpu.Power = int.Parse(Regex.Replace(doc.QuerySelector(powerSelectorNull).TextContent, @"\D+", "")); }
+                
+                catch { _gpu.Power = null; }
+                
                 _gpu.Techproc = doc.QuerySelector(techprocSelector)?.TextContent ?? "n/a";
-
-                _gpu.MemorySize = int.Parse(Regex.Replace(doc.QuerySelector(memorySizeGpuSelector).TextContent, @"\D+", ""));
-
+                
+                try { _gpu.MemorySize = int.Parse(Regex.Replace(doc.QuerySelector(memorySizeGpuSelector).TextContent, @"\D+", ""));}
+                catch(NullReferenceException) { continue; }
                 _gpu.MemoryType = doc.QuerySelector(memoryTypeSelectorGpu)?.FirstChild?.TextContent ?? "n/a";
-
+                _gpu.MaxScreenResolution = doc.QuerySelector(maxScreenResolutionGpuSelector)?.TextContent ?? "n/a";
                 _gpu.Mass = doc.QuerySelector(massSelector)?.FirstChild?.TextContent ?? "n/a";
 
                 try { _gpu.Price = decimal.Parse(Regex.Replace(doc.QuerySelector(priceSelector)?.TextContent, @"\D+", "")); }
-                catch (Exception ex) { _gpu.Price = 0; }
+                catch (Exception ex) { continue; }
 
                 _gpu.VerDisplayPort = doc.QuerySelector(verDisplayPortGpuSelector)?.FirstChild?.TextContent ?? "n/a";
                 _gpu.VerHdmi = doc.QuerySelector(verHdmiGpuSelector)?.FirstChild?.TextContent ?? "n/a";
                 _gpu.HerzMemory = doc.QuerySelector(herzMemoryGpuSelector)?.FirstChild?.TextContent ?? "n/a";
-                _gpu.Name = Regex.Replace(doc.QuerySelector(nameSelector)?.FirstChild?.TextContent, @"^\W+", "");
-                //_gpu.ImageName = doc.QuerySelector()
-
+                string Name = Regex.Replace(doc.QuerySelector(nameSelector)?.TextContent, @"(Выбор редакции)\s+", "");
+                _gpu.Name = Regex.Replace(Name, @"^\s+", "");
+                _gpu.ImageName = await ParseImage(doc, dir);
 
                 Console.WriteLine(_gpu.Name);
                 Console.WriteLine(_gpu.Manufacturer);
                 Console.WriteLine(_gpu.Model);
-                Console.WriteLine(_gpu.Power);
                 Console.WriteLine(_gpu.Techproc);
                 Console.WriteLine(_gpu.MemorySize);
                 Console.WriteLine(_gpu.MemoryType);
                 Console.WriteLine(_gpu.VerDisplayPort);
                 Console.WriteLine(_gpu.VerHdmi);
                 Console.WriteLine(_gpu.HerzMemory);
+                Console.WriteLine(_gpu.MaxScreenResolution);
+                Console.WriteLine(_gpu.RecommendedPsuPower);
+                Console.WriteLine(_gpu.Power);
                 Console.WriteLine(_gpu.Mass);
                 Console.WriteLine(_gpu.Price);
                 Console.WriteLine(_gpu.ImageName);

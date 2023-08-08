@@ -10,7 +10,7 @@ namespace ParserForMyApp.Data
 {
     public class ParserContext : DbContext
     {
-        public string DbPath { get; } = "server=localhost;username=postgres;database=PCBuilder;Password=959595";
+        public string DbPath { get; } = "server=localhost;username=postgres;database=PcBuilderApp;Password=959595";
 
         public ParserContext()
         {
@@ -26,12 +26,7 @@ namespace ParserForMyApp.Data
         public DbSet<Ram> Ram { get; set; }
         public DbSet<Ssd> Ssd { get; set; }
         public DbSet<Hdd> Hdd { get; set; }
-        public DbSet<ImageCase> ImageCases { get; set; }
-        public DbSet<ImageCpu> ImageCpus { get; set; }
-        public DbSet<ImageGpu> ImageGpus { get; set; }
-        public DbSet<ImageMotherboard> ImageMotherboards { get; set; }
-        public DbSet<ImagePsu> ImagePsus { get; set; }
-        public DbSet<ImageRam> ImageRams { get; set; }
+       
 
     }
 }
